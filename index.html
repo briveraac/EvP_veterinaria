@@ -3,11 +3,206 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Veterinaria San Marcos</title>
+  <meta name="description" content="Veterinaria San Marcos — Clínica veterinaria en Rancagua. Consultas, vacunación, cirugía menor, desparasitación y control de peso para perros, gatos, conejos y aves.">
+  <title>Veterinaria San Marcos | Clínica veterinaria en Rancagua</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Estructura del sitio pendiente: se agrega en partes posteriores -->
+  <header class="site-header">
+    <div class="container header__inner">
+      <a class="logo" href="#inicio" aria-label="Veterinaria San Marcos — ir al inicio">
+        <!-- Logo: ícono + nombre. Reemplazar por logo real si el negocio cuenta con uno -->
+        <span class="logo__icon" aria-hidden="true">🐾</span>
+        <span class="logo__text">Veterinaria San Marcos</span>
+      </a>
+
+      <button type="button" class="nav-toggle" id="navToggle" aria-controls="mainNav" aria-expanded="false" aria-label="Abrir menú de navegación">
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+      </button>
+
+      <nav class="main-nav" id="mainNav" aria-label="Navegación principal">
+        <ul class="main-nav__list">
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#nosotros">Sobre nosotros</a></li>
+          <li><a href="#servicios">Servicios</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+          <li><a class="main-nav__cta" href="#contacto">Agenda tu hora</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido-principal">
+    <!-- HERO -->
+    <section class="hero" id="inicio" aria-labelledby="hero-title">
+      <div class="container hero__inner">
+        <div class="hero__text">
+          <!-- Contenido definitivo (propuesta de valor): Parte 4 -->
+          <h1 id="hero-title">Título principal (contenido definitivo en Parte 4)</h1>
+          <p class="hero__subtitle">Bajada / propuesta de valor (contenido definitivo en Parte 4).</p>
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="#contacto">Agenda tu hora</a>
+            <a class="btn btn--secondary" href="#servicios">Conoce nuestros servicios</a>
+          </div>
+        </div>
+        <div class="hero__media">
+          <img src="assets/img/hero-veterinaria.jpg" alt="Equipo veterinario de Veterinaria San Marcos atendiendo a una mascota" width="640" height="480" loading="eager">
+        </div>
+      </div>
+    </section>
+
+    <!-- SOBRE NOSOTROS -->
+    <section class="about" id="nosotros" aria-labelledby="about-title">
+      <div class="container about__inner">
+        <div class="about__text">
+          <!-- Contenido definitivo (historia, equipo): Parte 8 -->
+          <h2 id="about-title">Sobre nosotros (contenido definitivo en Parte 8)</h2>
+          <p>Texto provisional sobre la historia y el equipo de la veterinaria.</p>
+          <ul class="about__facts">
+            <li>Fundada en <strong>2009</strong></li>
+            <li>3 médicos veterinarios</li>
+            <li>1 técnico veterinario</li>
+            <li>1 recepcionista administrativa</li>
+          </ul>
+        </div>
+        <div class="about__media">
+          <video controls preload="none" poster="assets/img/video-poster.jpg" width="640" height="360">
+            <source src="assets/video/conoce-la-clinica.mp4" type="video/mp4">
+            Tu navegador no soporta la reproducción de video. Puedes <a href="assets/video/conoce-la-clinica.mp4">descargar el video aquí</a>.
+          </video>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICIOS -->
+    <section class="services" id="servicios" aria-labelledby="services-title">
+      <div class="container">
+        <!-- Contenido definitivo (descripciones de servicios): Parte 5 -->
+        <h2 id="services-title">Nuestros servicios (contenido definitivo en Parte 5)</h2>
+        <div class="services__grid">
+          <article class="service-card">
+            <img class="service-card__icon" src="assets/img/icon-consulta.svg" alt="" width="48" height="48">
+            <h3>Consultas generales</h3>
+            <p>Descripción provisional del servicio.</p>
+          </article>
+          <article class="service-card">
+            <img class="service-card__icon" src="assets/img/icon-vacunacion.svg" alt="" width="48" height="48">
+            <h3>Vacunación</h3>
+            <p>Descripción provisional del servicio.</p>
+          </article>
+          <article class="service-card">
+            <img class="service-card__icon" src="assets/img/icon-cirugia.svg" alt="" width="48" height="48">
+            <h3>Cirugía menor</h3>
+            <p>Descripción provisional del servicio.</p>
+          </article>
+          <article class="service-card">
+            <img class="service-card__icon" src="assets/img/icon-desparasitacion.svg" alt="" width="48" height="48">
+            <h3>Desparasitación</h3>
+            <p>Descripción provisional del servicio.</p>
+          </article>
+          <article class="service-card">
+            <img class="service-card__icon" src="assets/img/icon-control-peso.svg" alt="" width="48" height="48">
+            <h3>Control de peso</h3>
+            <p>Descripción provisional del servicio.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACTO / UBICACIÓN -->
+    <section class="contact" id="contacto" aria-labelledby="contact-title">
+      <div class="container contact__inner">
+        <div class="contact__info">
+          <!-- Contenido definitivo (datos de contacto reales / placeholders confirmados): Parte 8 -->
+          <h2 id="contact-title">Contacto y ubicación (contenido definitivo en Parte 8)</h2>
+          <address>
+            <p><span aria-hidden="true">📍</span> [COMPLETAR: dirección exacta], Rancagua, Chile</p>
+            <p><span aria-hidden="true">📞</span> <a href="#">[COMPLETAR: teléfono]</a></p>
+            <p><span aria-hidden="true">✉️</span> <a href="#">[COMPLETAR: correo electrónico]</a></p>
+            <p><span aria-hidden="true">🕒</span> [COMPLETAR: horario de atención]</p>
+          </address>
+
+          <div class="contact__map" aria-label="Mapa de ubicación de Veterinaria San Marcos en Rancagua">
+            <!-- Mapa interactivo: se integra en la Parte 8. Dirección exacta no disponible en el informe -->
+            <p>Mapa interactivo de Rancagua (se integra en la Parte 8; ubicación referencial hasta contar con la dirección exacta).</p>
+          </div>
+        </div>
+
+        <form class="contact__form" id="appointmentForm" novalidate>
+          <h3>Solicita tu hora</h3>
+          <!-- Validación JS definitiva: Parte 9 -->
+          <div class="form-field">
+            <label for="ownerName">Nombre completo</label>
+            <input type="text" id="ownerName" name="ownerName" autocomplete="name" required>
+          </div>
+          <div class="form-field">
+            <label for="ownerEmail">Correo electrónico</label>
+            <input type="email" id="ownerEmail" name="ownerEmail" autocomplete="email" required>
+          </div>
+          <div class="form-field">
+            <label for="ownerPhone">Teléfono</label>
+            <input type="tel" id="ownerPhone" name="ownerPhone" autocomplete="tel" required>
+          </div>
+          <div class="form-field">
+            <label for="petSpecies">Especie de tu mascota</label>
+            <input type="text" id="petSpecies" name="petSpecies" list="petSpeciesOptions" autocomplete="off" required>
+            <datalist id="petSpeciesOptions">
+              <option value="Perro">
+              <option value="Gato">
+              <option value="Conejo">
+              <option value="Ave">
+            </datalist>
+          </div>
+          <div class="form-field">
+            <label for="preferredDate">Fecha preferida</label>
+            <input type="date" id="preferredDate" name="preferredDate" required>
+          </div>
+          <div class="form-field">
+            <label for="reason">Motivo de la consulta</label>
+            <textarea id="reason" name="reason" rows="3" required></textarea>
+          </div>
+          <button type="submit" class="btn btn--primary">Enviar solicitud</button>
+          <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <p class="logo__text">Veterinaria San Marcos</p>
+        <p>Cuidando a tus mascotas en Rancagua desde 2009.</p>
+      </div>
+
+      <nav class="footer__nav" aria-label="Enlaces del pie de página">
+        <ul>
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#nosotros">Sobre nosotros</a></li>
+          <li><a href="#servicios">Servicios</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer__contact">
+        <p>[COMPLETAR: dirección exacta], Rancagua</p>
+        <p>[COMPLETAR: teléfono]</p>
+        <p>[COMPLETAR: correo electrónico]</p>
+      </div>
+
+      <div class="footer__social">
+        <a href="#" aria-label="Instagram de Veterinaria San Marcos (pendiente: agregar enlace real)">Instagram</a>
+        <a href="#" aria-label="Facebook de Veterinaria San Marcos (pendiente: agregar enlace real)">Facebook</a>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p>&copy; <span id="year"></span> Veterinaria San Marcos. Todos los derechos reservados.</p>
+      <button type="button" class="back-to-top" id="backToTop" aria-label="Volver arriba">↑</button>
+    </div>
+  </footer>
 
   <script src="script.js"></script>
 </body>
