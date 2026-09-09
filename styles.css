@@ -613,11 +613,11 @@ button {
   }
 }
 /* Ajustes del mapa (integrado en la Parte 8) */
-.contactmap {
+.contact__map {
   border-style: solid;
 }
 
-.contactmap iframe {
+.contact__map iframe {
   width: 100%;
   border-radius: var(--radius-sm);
 }
@@ -661,7 +661,7 @@ button {
   font-weight: 600;
 }
 
-/* Accesibilidad: skip link (Parte 10) /
+/* Accesibilidad: skip link (Parte 10) */
 .skip-link {
   position: absolute;
   top: -3rem;
@@ -678,12 +678,12 @@ button {
   top: var(--space-sm);
 }
 
-/ Mapa: evita que la rueda del mouse "secuestre" el scroll de la página /
+/* Mapa: evita que la rueda del mouse "secuestre" el scroll de la página */
 .map-embed {
   position: relative;
 }
 
-.map-embedoverlay {
+.map-embed__overlay {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -696,11 +696,11 @@ button {
   padding: var(--space-sm);
 }
 
-.map-embedoverlay.is-hidden {
+.map-embed__overlay.is-hidden {
   display: none;
 }
 
-/ Respeta la preferencia de movimiento reducido */
+/* Respeta la preferencia de movimiento reducido */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
