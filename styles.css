@@ -627,3 +627,36 @@ button {
   font-size: 0.8rem;
   color: var(--color-text-muted);
 }
+
+/* Estados de validación e interactividad (Parte 9) */
+.back-to-top {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  right: var(--space-md);
+  bottom: var(--space-md);
+  box-shadow: var(--shadow-md);
+}
+
+.field-error {
+  color: var(--color-error);
+  font-size: 0.8rem;
+  min-height: 1rem;
+  margin-top: var(--space-3xs);
+}
+
+.form-field.has-error input,
+.form-field.has-error textarea {
+  border-color: var(--color-error);
+}
+
+.form-status--success {
+  color: var(--color-primary-dark);
+  font-weight: 600;
+}
+
+.form-status--error {
+  color: var(--color-error);
+  font-weight: 600;
+}
