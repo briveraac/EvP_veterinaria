@@ -8,6 +8,8 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <a class="skip-link" href="#contenido-principal">Saltar al contenido principal</a>
+
   <header class="site-header">
     <div class="container header__inner">
       <a class="logo" href="#inicio" aria-label="Veterinaria San Marcos — ir al inicio">
@@ -126,15 +128,18 @@
             <p><span aria-hidden="true">🕒</span> [COMPLETAR: horario de atención]</p>
           </address>
 
-          <div class="contactmap" aria-label="Mapa de ubicación referencial de Veterinaria San Marcos en Rancagua">
-            <iframe
-              title="Ubicación referencial de Veterinaria San Marcos en Rancagua"
-              src="https://www.openstreetmap.org/export/embed.html?bbox=-70.7644%2C-34.1808%2C-70.7244%2C-34.1608&amp;layer=mapnik&amp;marker=-34.1708%2C-70.7444"
-              loading="lazy"
-              width="100%"
-              height="300"
-              style="border:0;">
-            </iframe>
+          <div class="contact__map" aria-label="Mapa de ubicación referencial de Veterinaria San Marcos en Rancagua">
+            <div class="map-embed">
+              <iframe
+                title="Ubicación referencial de Veterinaria San Marcos en Rancagua"
+                src="https://www.openstreetmap.org/export/embed.html?bbox=-70.7644%2C-34.1808%2C-70.7244%2C-34.1608&amp;layer=mapnik&amp;marker=-34.1708%2C-70.7444"
+                loading="lazy"
+                width="100%"
+                height="300"
+                style="border:0;">
+              </iframe>
+              <button type="button" class="map-embed__overlay" id="mapOverlay">Haz clic para interactuar con el mapa</button>
+            </div>
             <p class="map-disclaimer">Ubicación referencial (centro de Rancagua). Se actualizará con la dirección exacta cuando esté disponible.</p>
           </div>
         </div>

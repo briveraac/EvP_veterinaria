@@ -5,7 +5,18 @@ document.addEventListener('DOMContentLoaded', () => {
   initBackToTop();
   setFooterYear();
   initAppointmentForm();
+  initMapOverlay();
 });
+
+function initMapOverlay() {
+  const overlay = document.getElementById('mapOverlay');
+  if (!overlay) return;
+
+  overlay.addEventListener('click', () => {
+    overlay.classList.add('is-hidden');
+    overlay.setAttribute('tabindex', '-1');
+  });
+}
 
 /* ---------- Menú de navegación móvil ---------- */
 
