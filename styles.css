@@ -612,3 +612,18 @@ button {
     font-size: 1.0625rem;
   }
 }
+/* Ajustes del mapa (integrado en la Parte 8) */
+.contactmap {
+  border-style: solid;
+}
+
+.contactmap iframe {
+  width: 100%;
+  border-radius: var(--radius-sm);
+}
+
+.map-disclaimer {
+  margin-top: var(--space-2xs);
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
