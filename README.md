@@ -1,29 +1,16 @@
-# Veterinaria San Marcos — Sitio Web
+# React + Vite
 
-Sitio web estático (HTML, CSS y JavaScript) para **Veterinaria San Marcos**, clínica veterinaria ubicada en Rancagua, Región del Libertador General Bernardo O'Higgins, Chile.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Resumen de información extraída de `informe.md`
+Currently, two official plugins are available:
 
-**Identidad del negocio**
-- Nombre: Veterinaria San Marcos
-- Fundación: año 2009
-- Ubicación: comuna de Rancagua, Región del Libertador General Bernardo O'Higgins, Chile (dirección exacta no especificada en el informe)
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-**Servicios ofrecidos**
-- Consultas generales
-- Vacunación
-- Cirugía menor
-- Desparasitación
-- Control de peso
+## React Compiler
 
-**Especies atendidas / público objetivo**
-- Perros, gatos, conejos y aves
-- Dueños de mascotas domésticas de Rancagua y alrededores
-- Volumen actual: ~25 pacientes diarios
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Cómo abrir el proyecto
-Abre `index.html` directamente en un navegador, o sírvelo como archivos estáticos con cualquier servidor simple, por ejemplo:
+## Expanding the ESLint configuration
 
-```bash
-npx serve .
-```
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
