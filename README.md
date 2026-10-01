@@ -1,16 +1,36 @@
-# React + Vite
+# EvP Veterinaria
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Sitio de Veterinaria San Marcos migrado a React con Vite, manteniendo la estructura visual original y aplicando una arquitectura modular para estilos y comportamiento del DOM.
 
-Currently, two official plugins are available:
+## Scripts
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- npm run dev: entorno de desarrollo
+- npm run build: build de producción
+- npm run preview: previsualizar build
+- npm run lint: validar calidad de código
 
-## React Compiler
+## Arquitectura
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+src/
+- App.jsx: estructura JSX principal de la página
+- main.jsx: punto de entrada de React
+- features/site/
+	- initSiteUi.js: bootstrap de comportamiento UI
+	- mobileNav.js: navegación móvil
+	- backToTop.js: botón volver arriba
+	- mapOverlay.js: overlay de mapa
+	- footerYear.js: año dinámico de footer
+	- appointmentForm.js: validación y estado del formulario
+- styles/
+	- main.css: entrada única de estilos
+	- tokens.css: variables de diseño
+	- base.css: reset y base tipográfica
+	- layout.css: header, nav, footer, contenedor
+	- sections.css: estilos por secciones
+	- components.css: componentes reutilizables
+	- responsive.css: breakpoints y motion reduce
 
-## Expanding the ESLint configuration
+## Notas
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- El proyecto conserva assets referenciados en rutas assets/...; deben existir en public/assets/... para verse correctamente en Vite.
+- Los archivos legacy en raíz, styles.css y script.js, ya no son necesarios para ejecución actual.

@@ -1,4 +1,9 @@
+import { useEffect } from 'react'
+import { initSiteUi } from './features/site/initSiteUi'
+
 function App() {
+  useEffect(() => initSiteUi(), [])
+
   return (
     <>
       <a className="skip-link" href="#contenido-principal">

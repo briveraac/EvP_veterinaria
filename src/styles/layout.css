@@ -1,0 +1,136 @@
+.container {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin-inline: auto;
+  padding-inline: var(--space-md);
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  z-index: 50;
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: var(--space-sm);
+  gap: var(--space-sm);
+  position: relative;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3xs);
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: var(--color-text);
+}
+
+.logo__icon {
+  font-size: 1.5rem;
+}
+
+.nav-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: var(--space-3xs);
+}
+
+.nav-toggle__bar {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-text);
+  border-radius: 2px;
+}
+
+.main-nav {
+  position: absolute;
+  inset-inline: 0;
+  top: 100%;
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height var(--transition-base);
+}
+
+.main-nav.is-open {
+  max-height: 24rem;
+}
+
+.main-nav__list {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-sm) var(--space-md);
+  gap: var(--space-xs);
+}
+
+.main-nav__list a {
+  display: block;
+  padding: var(--space-2xs) 0;
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.main-nav__cta {
+  color: var(--color-primary) !important;
+  font-weight: 700 !important;
+}
+
+.site-footer {
+  background-color: var(--color-text);
+  color: var(--color-bg);
+  padding-block: var(--space-lg) var(--space-sm);
+}
+
+.footer__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.footer__nav ul,
+.footer__social {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.footer__social {
+  flex-direction: row;
+  gap: var(--space-md);
+}
+
+.footer__nav a,
+.footer__social a,
+.footer__contact p {
+  color: var(--color-bg);
+  opacity: 0.85;
+}
+
+.footer__nav a:hover,
+.footer__social a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+.footer__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  margin-top: var(--space-lg);
+  padding-top: var(--space-sm);
+  border-top: 1px solid rgba(250, 249, 246, 0.15);
+  font-size: 0.875rem;
+}
