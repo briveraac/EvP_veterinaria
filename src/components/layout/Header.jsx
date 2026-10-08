@@ -1,4 +1,7 @@
+import { getSession, signOut } from '../../features/auth/session'
+
 function Header() {
+  const user = getSession()
   return (
     <header className="site-header">
       <div className="container header__inner">
@@ -24,6 +27,8 @@ function Header() {
 
         <nav className="main-nav" id="mainNav" aria-label="Navegación principal">
           <ul className="main-nav__list">
+            {user?.role === 'Administrador' && <li><a href="/admin#resumen">Panel admin</a></li>}
+            <li>{user ? <button type="button" onClick={signOut}>Cerrar sesión</button> : <a href="/login">Iniciar sesión</a>}</li>
             <li>
               <a href="#inicio">Inicio</a>
             </li>

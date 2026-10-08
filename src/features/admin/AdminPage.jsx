@@ -3,6 +3,7 @@ import AdminEditor from './AdminEditor'
 import AdminIcon from './AdminIcon'
 import { downloadReport, localDate, readData, ROLES, SERVICES, STATUSES, STORAGE_KEY } from './adminData'
 import './admin.css'
+import { signOut } from '../auth/session'
 
 const navigation = [
   { id: 'resumen', label: 'Resumen' },
@@ -110,6 +111,7 @@ export default function AdminPage() {
         <a className="admin-brand" href="/admin">Veterinaria San Marcos</a>
         <div className="admin-header-actions">
           <a href="/">Volver al sitio</a>
+          <button className="admin-small-button" onClick={signOut}>Cerrar sesión</button>
           <button className="admin-icon-button admin-menu-button" aria-label="Abrir navegación" aria-expanded={menuOpen} aria-controls="admin-navigation" onClick={() => setMenuOpen(!menuOpen)}><AdminIcon name="menu" /></button>
         </div>
       </header>
