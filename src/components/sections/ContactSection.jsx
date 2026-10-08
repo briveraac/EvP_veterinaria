@@ -18,10 +18,12 @@ function ContactSection() {
               <span aria-hidden="true">📞</span> <a href="#">[+56 2 3212 3456 ]</a>
             </p>
             <p>
-              <span aria-hidden="true">✉️</span> <a href="#">[COMPLETAR: correo electrónico]</a>
+              <span aria-hidden="true">✉️</span> <a href="#">[clinica.evpveterinaria@gmail.com]</a>
             </p>
             <p>
-              <span aria-hidden="true">🕒</span> [COMPLETAR: horario de atención]
+              <span aria-hidden="true">🕒</span> [Lunes a Viernes: 09:00 a 19:30 hrs. 
+                                                  Sábado: 10:00 a 15:00 hrs
+                                                  .Domingo y Festivos: Cerrado.]
             </p>
           </address>
 
