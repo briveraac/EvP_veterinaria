@@ -1,6 +1,6 @@
 @media (min-width: 30em) {
   .hero__actions {
-    gap: var(--space-md);
+    gap: 1.5rem;
   }
 }
 
@@ -21,7 +21,7 @@
     flex-direction: row;
     align-items: center;
     padding: 0;
-    gap: var(--space-md);
+    gap: 1.5rem;
   }
 
   .services__grid {
@@ -29,13 +29,14 @@
   }
 
   .footer__inner {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (min-width: 64em) {
+  .footer__inner {
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.8fr) minmax(0, 1.3fr) minmax(0, 0.8fr);
+  }
   .hero__inner {
     flex-direction: row;
     align-items: center;
@@ -73,13 +74,13 @@
 
 @media (min-width: 80em) {
   .hero {
-    padding-block: var(--space-2xl) var(--space-xl);
+    padding-block: 6rem 4rem;
   }
 
   .services,
   .about,
   .contact {
-    padding-block: var(--space-2xl);
+    padding-block: 6rem;
   }
 }
 

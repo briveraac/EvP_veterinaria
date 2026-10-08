@@ -1,13 +1,14 @@
-import { lazy, Suspense } from 'react'
-import { getSession } from '../auth/session'
-
-const AdminPage = lazy(() => import('./AdminPage.jsx'))
-
+import AdminPage from './AdminPage.jsx';
+import { getSession } from '../auth/session';
 export default function AdminEntry() {
-  const user = getSession()
-  if (!user || user.role !== 'Administrador') {
-    window.location.replace(user ? '/' : '/login')
-    return <p role="status">Redirigiendo…</p>
+  const user = getSession();
+  if (!user) {
+    window.location.replace('/login');
+    return <p role="status">Redirigiendo…</p>;
   }
-  return <Suspense fallback={<p role="status">Cargando administración…</p>}><AdminPage /></Suspense>
+  if (user.role !== 'Administrador') {
+    window.location.replace('/');
+    return <p role="status">Redirigiendo…</p>;
+  }
+  return <AdminPage />;
 }

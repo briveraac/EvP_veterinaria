@@ -15,9 +15,14 @@ const paths = {
   menu: 'M4 6h16 M4 12h16 M4 18h16',
   external: 'M14 3h7v7 M21 3l-9 9 M10 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5',
   shield: 'M12 2l8 4v6c0 5-8 10-8 10S4 17 4 12V6z M8 12l3 3 5-6',
-  paw: 'M8 14c-2 2-4 4-2 6s4-1 6-1 4 3 6 1 0-4-2-6-6-2-8 0z M5 7a2 3 0 1 0 0 6 2 3 0 0 0 0-6z M10 2a2 3 0 1 0 0 6 2 3 0 0 0 0-6z M16 3a2 3 0 1 0 0 6 2 3 0 0 0 0-6z M21 8a2 3 0 1 0 0 6 2 3 0 0 0 0-6z',
-}
-
-export default function AdminIcon({ name, size = 20, ...props }) {
-  return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}><path d={paths[name] || paths.grid} /></svg>
+  paw: 'M8 14c-2 2-4 4-2 6s4-1 6-1 4 3 6 1 0-4-2-6-6-2-8 0z M5 7a2 3 0 1 0 0 6 2 3 0 0 0 0-6z M10 2a2 3 0 1 0 0 6 2 3 0 0 0 0-6z M16 3a2 3 0 1 0 0 6 2 3 0 0 0 0-6z M21 8a2 3 0 1 0 0 6 2 3 0 0 0 0-6z'
+};
+export default function AdminIcon({
+  name,
+  size = 20,
+  ...props
+}) {
+  return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>
+    <path d={paths[name] || paths.grid} />
+  </svg>;
 }

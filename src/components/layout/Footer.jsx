@@ -40,9 +40,9 @@ function Footer() {
         </div>
       </div>
 
-      <div className="footer__bottom">
+      <div className="container footer__bottom">
         <p>
-          © <span id="year"></span> Veterinaria San Marcos. Todos los derechos reservados.
+          © <span>{new Date().getFullYear()}</span> Veterinaria San Marcos. Todos los derechos reservados.
         </p>
         <button type="button" className="back-to-top" id="backToTop" aria-label="Volver arriba">
           ↑

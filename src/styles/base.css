@@ -15,9 +15,9 @@ html {
 }
 
 body {
-  font-family: var(--font-family-base);
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-base);
+  font-family: 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
   color: var(--color-text);
   background-color: var(--color-bg);
 }
@@ -39,16 +39,16 @@ h1 {
 
 h2 {
   font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2.25rem);
-  margin-bottom: var(--space-md);
+  margin-bottom: 1.5rem;
 }
 
 h3 {
   font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
-  margin-bottom: var(--space-xs);
+  margin-bottom: 0.75rem;
 }
 
 p {
-  margin-bottom: var(--space-sm);
+  margin-bottom: 1rem;
   color: var(--color-text);
 }
 

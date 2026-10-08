@@ -1,54 +1,48 @@
-# EvP Veterinaria
+# Veterinaria San Marcos
 
-Sitio de Veterinaria San Marcos migrado a React con Vite, manteniendo la estructura visual original y aplicando una arquitectura modular para estilos y comportamiento del DOM.
+Proyecto en React y Vite. Tiene una página principal, login, formulario para pedir una hora y un panel de administración.
 
-## Scripts
+## Cómo ejecutarlo
 
-- npm run dev: entorno de desarrollo
-- npm run build: build de producción
-- npm run preview: previsualizar build
-- npm run lint: validar calidad de código
-- npm test: comprobar roles, credenciales, expiración y cierre de sesión
+- `npm install`: instalar las dependencias.
+- `npm run dev`: abrir el proyecto en desarrollo.
+- `npm run build`: generar la versión para publicar.
+- `npm run preview`: revisar esa versión.
+- `npm run lint`: revisar el código.
+- `npm test`: probar el inicio y cierre de sesión.
 
-## Arquitectura
+## Dónde está cada cosa
 
-src/
-- App.jsx: estructura JSX principal de la página
-- main.jsx: punto de entrada de React
-- features/site/
-	- initSiteUi.js: bootstrap de comportamiento UI
-	- mobileNav.js: navegación móvil
-	- backToTop.js: botón volver arriba
-	- mapOverlay.js: overlay de mapa
-	- footerYear.js: año dinámico de footer
-	- appointmentForm.js: validación y estado del formulario
-- styles/
-	- main.css: entrada única de estilos
-	- tokens.css: variables de diseño
-	- base.css: reset y base tipográfica
-	- layout.css: header, nav, footer, contenedor
-	- sections.css: estilos por secciones
-	- components.css: componentes reutilizables
-	- responsive.css: breakpoints y motion reduce
+- `src/main.jsx`: elige qué página mostrar según la URL.
+- `src/App.jsx`: arma la página principal.
+- `src/components/layout`: encabezado y footer.
+- `src/components/sections`: inicio, información, servicios y contacto.
+- `src/features/site/initSiteUi.js`: menú móvil, botón para volver arriba y activación del mapa.
+- `src/features/site/appointmentForm.js`: validación del formulario de agendamiento.
+- `src/features/site/AppointmentPage.jsx`: página para pedir una hora.
+- `src/features/auth`: login y sesión del usuario.
+- `src/features/admin`: usuarios, citas y reportes.
+- `src/styles`: estilos del sitio. Los colores comunes están en `tokens.css`.
+- `public/assets`: imágenes y video.
 
-## Login y agendamiento
+## Usuarios de ejemplo
 
-- `/login`: identifica automáticamente el rol de una cuenta activa. Los usuarios normales vuelven al inicio; los administradores eligen el panel o la página principal.
-- `/admin`: requiere sesión con rol Administrador. Desde el sitio se puede volver al panel o cerrar sesión.
-- `/agendar`: formulario independiente con enlace para volver al inicio. Los botones de agendamiento llevan a esta ruta. Completa nombre y correo si existe una sesión.
+La contraseña para todas las cuentas activas es `SanMarcos2026!`.
 
-Accesos iniciales de demostración (contraseña común `SanMarcos2026!`):
+- Bruno Rivera: `brun.rivera@duocuc.cl` (administrador).
+- German Pino: `germ.pino@duocuc.cl` (administrador).
+- Cliente: `cliente@sanmarcos.cl` (dueño de mascota).
 
-- Administradores: `brun.rivera@duocuc.cl` y `germ.pino@duocuc.cl`.
-- Usuario normal: `cliente@sanmarcos.cl`.
+En `/login`, el rol se obtiene del usuario. El administrador puede entrar al panel o volver al inicio. Los otros usuarios vuelven al inicio.
 
-Las cuentas se consultan desde el mismo directorio del panel; cambios de rol y desactivaciones afectan el acceso. Si ya hay datos guardados de una versión anterior, estos se conservan: puedes crear un Dueño de mascota desde el panel para probar el acceso normal.
+## Datos y funciones
 
-La sesión dura ocho horas y se guarda en `sessionStorage`. Este proyecto no tiene backend: el login es una demostración con contraseña compartida, y la protección de rutas del navegador no reemplaza autenticación ni autorización en un servidor. El formulario de agendamiento valida los datos, pero no los envía ni registra citas. Para uso real se deben conectar autenticación y agendamiento a una API, validar permisos en el servidor y reemplazar las credenciales de ejemplo.
+El panel permite crear y editar usuarios y citas, activar cuentas, cambiar roles, confirmar citas, buscar, filtrar y descargar reportes CSV. Debe quedar al menos un administrador activo y no se permiten correos repetidos ni citas no canceladas para el mismo veterinario a la misma hora.
 
-El hosting debe servir `index.html` para `/login`, `/admin` y `/agendar` (fallback de SPA). Vite ya lo hace en desarrollo y preview.
+Los usuarios iniciales están en `src/features/admin/adminUsers.js`. Los cambios del panel se guardan en `localStorage` con la clave `san-marcos-admin-demo-v2`. Se conservan al recargar. La sesión se guarda en `sessionStorage` y dura ocho horas.
 
-## Notas
+El formulario de `/agendar` valida los datos y completa nombre y correo si hay una sesión. Es una demostración: no envía solicitudes ni crea citas en el panel.
 
-- El proyecto conserva assets referenciados en rutas assets/...; deben existir en public/assets/... para verse correctamente en Vite.
-- Los archivos legacy en raíz, styles.css y script.js, ya no son necesarios para ejecución actual.
+No hay backend. El login usa una contraseña de ejemplo; para uso real hace falta un servidor que valide las credenciales y los permisos.
+
+Al publicar, el hosting debe servir `index.html` también para `/login`, `/admin` y `/agendar`. Vite ya lo hace en desarrollo.
