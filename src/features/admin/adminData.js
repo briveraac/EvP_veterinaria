@@ -1,7 +1,9 @@
+import { INITIAL_USERS } from './adminUsers'
+
 export const ROLES = ['Administrador', 'Recepcionista', 'Dueño de mascota']
 export const SERVICES = ['Consulta general', 'Vacunación', 'Cirugía menor', 'Desparasitación', 'Control de peso']
 export const STATUSES = ['Pendiente', 'Confirmada', 'Completada', 'Cancelada']
-export const STORAGE_KEY = 'san-marcos-admin-demo-v1'
+export const STORAGE_KEY = 'san-marcos-admin-demo-v2'
 
 export function localDate(date = new Date()) {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
@@ -12,14 +14,7 @@ export function seedData() {
   const tomorrow = new Date()
   tomorrow.setDate(tomorrow.getDate() + 1)
   return {
-    users: [
-      { id: 'u1', name: 'Camila Torres', email: 'camila@example.com', role: 'Administrador', active: true },
-      { id: 'u2', name: 'Valentina Rojas', email: 'valentina@example.com', role: 'Recepcionista', active: true },
-      { id: 'u3', name: 'Matías González', email: 'matias@example.com', role: 'Dueño de mascota', active: true },
-      { id: 'u4', name: 'Francisca Muñoz', email: 'francisca@example.com', role: 'Dueño de mascota', active: true },
-      { id: 'u5', name: 'Diego Silva', email: 'diego@example.com', role: 'Dueño de mascota', active: false },
-      { id: 'u6', name: 'Antonia Pérez', email: 'antonia@example.com', role: 'Dueño de mascota', active: true },
-    ],
+    users: INITIAL_USERS.map(user => ({ ...user })),
     appointments: [
       { id: 'c1', pet: 'Luna', species: 'Perro', owner: 'Francisca Muñoz', service: 'Consulta general', date: today, time: '09:00', vet: 'Dra. Sofía Herrera', status: 'Completada' },
       { id: 'c2', pet: 'Milo', species: 'Gato', owner: 'Matías González', service: 'Vacunación', date: today, time: '10:00', vet: 'Dr. Nicolás Vega', status: 'Confirmada' },
