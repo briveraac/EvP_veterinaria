@@ -11,11 +11,11 @@ function ContactSection() {
           </p>
           <address>
             <p>
-              <span aria-hidden="true">📍</span> [COMPLETAR: dirección exacta] — Rancagua, Región
+              <span aria-hidden="true">📍</span> [Plaza de los Héroes 445, Rancagua] — Rancagua, Región
               de O'Higgins, Chile
             </p>
             <p>
-              <span aria-hidden="true">📞</span> <a href="#">[COMPLETAR: teléfono de contacto]</a>
+              <span aria-hidden="true">📞</span> <a href="#">[+56 2 3212 3456 ]</a>
             </p>
             <p>
               <span aria-hidden="true">✉️</span> <a href="#">[COMPLETAR: correo electrónico]</a>
