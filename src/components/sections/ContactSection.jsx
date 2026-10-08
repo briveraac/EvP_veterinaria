@@ -48,50 +48,7 @@ function ContactSection() {
           </div>
         </div>
 
-        <form className="contact__form" id="appointmentForm" noValidate>
-          <h3>Solicita tu hora</h3>
-          <div className="form-field">
-            <label htmlFor="ownerName">Nombre completo</label>
-            <input type="text" id="ownerName" name="ownerName" autoComplete="name" required />
-          </div>
-          <div className="form-field">
-            <label htmlFor="ownerEmail">Correo electrónico</label>
-            <input type="email" id="ownerEmail" name="ownerEmail" autoComplete="email" required />
-          </div>
-          <div className="form-field">
-            <label htmlFor="ownerPhone">Teléfono</label>
-            <input type="tel" id="ownerPhone" name="ownerPhone" autoComplete="tel" required />
-          </div>
-          <div className="form-field">
-            <label htmlFor="petSpecies">Especie de tu mascota</label>
-            <input
-              type="text"
-              id="petSpecies"
-              name="petSpecies"
-              list="petSpeciesOptions"
-              autoComplete="off"
-              required
-            />
-            <datalist id="petSpeciesOptions">
-              <option value="Perro" />
-              <option value="Gato" />
-              <option value="Conejo" />
-              <option value="Ave" />
-            </datalist>
-          </div>
-          <div className="form-field">
-            <label htmlFor="preferredDate">Fecha preferida</label>
-            <input type="date" id="preferredDate" name="preferredDate" required />
-          </div>
-          <div className="form-field">
-            <label htmlFor="reason">Motivo de la consulta</label>
-            <textarea id="reason" name="reason" rows="3" required></textarea>
-          </div>
-          <button type="submit" className="btn btn--primary">
-            Enviar solicitud
-          </button>
-          <p className="form-status" id="formStatus" role="status" aria-live="polite"></p>
-        </form>
+<aside className="contact-booking"><h3>Una hora para su bienestar</h3><p>Solicita atención para tu mascota en nuestra página de agendamiento.</p><a className="btn btn--primary" href="/agendar">Agenda tu hora</a></aside>
       </div>
     </section>
   )

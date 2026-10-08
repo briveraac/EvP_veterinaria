@@ -19,4 +19,12 @@
 .contact-booking { align-self: center; padding: var(--space-lg); border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-bg); }
 .contact-booking p { margin-block: var(--space-sm); }
 .main-nav button { color: var(--color-primary); font: inherit; font-weight: 600; }
+.contact-booking { flex: 1 1 50%; }
+@media (min-width: 48em) and (max-width: 74em) {
+  .nav-toggle { display: flex; flex-shrink: 0; }
+  .main-nav { position: absolute; inset-inline: 0; top: 100%; max-height: 0; overflow: hidden; background: var(--color-surface); box-shadow: var(--shadow-sm); }
+  .main-nav.is-open { max-height: 30rem; }
+  .main-nav__list { flex-direction: column; align-items: stretch; padding: var(--space-sm) var(--space-md); gap: var(--space-xs); }
+}
+.main-nav.is-open { max-height: 30rem; }
 @media (max-width: 800px) { .access-layout, .appointment-layout { grid-template-columns: 1fr; gap: var(--space-lg); } .access-intro img { display: none; } .appointment-intro { position: static; } }

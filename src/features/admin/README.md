@@ -2,7 +2,7 @@
 
 Abrir `/admin` con `npm run dev`. El sitio público sigue disponible en `/`.
 
-El módulo se carga de forma independiente desde `src/main.jsx`, sin modificar el sitio público ni implementar el login.
+El módulo se carga de forma independiente desde `src/main.jsx`. `/admin` exige una sesión activa con rol Administrador; sin sesión redirige a `/login`, y los demás roles vuelven al sitio público.
 
 ## Completar los dos usuarios
 
@@ -21,9 +21,9 @@ Los datos iniciales se usan cuando no hay cambios guardados. Si se modifica el a
 
 ## Integración con login y backend
 
-Esta entrega es una **demostración de frontend**, accesible sin autenticación mientras se desarrolla el login. Los datos son ficticios y se guardan en `localStorage` bajo `san-marcos-admin-demo-v2`. No envía invitaciones, crea credenciales ni guarda registros en un servidor.
+Esta entrega es una **demostración de frontend** con login local. Los datos son ficticios y se guardan en `localStorage` bajo `san-marcos-admin-demo-v2`. No envía invitaciones ni guarda registros en un servidor. Las cuentas activas del panel pueden ingresar con la contraseña compartida `SanMarcos2026!`. Las credenciales iniciales se encuentran en el README principal.
 
-Al integrar el login, proteger la ruta `/admin` antes de renderizar `AdminPage`: una sesión autenticada con rol Administrador debe ser obligatoria. La interfaz actual no valida tokens ni permisos. Los demás roles no deben poder acceder a este módulo. El backend también debe verificar rol y token en cada endpoint.
+`AdminEntry` comprueba el rol antes de renderizar `AdminPage`. El login local no constituye autenticación segura: el backend deberá validar las credenciales y verificar rol y token en cada endpoint. Reemplazar el módulo `features/auth/session.js` al integrar la API.
 
 La carga inicial está en `adminData.js` (`readData`); las mutaciones están centralizadas en `AdminPage.jsx` (`persist`). Reemplazar la lectura y las operaciones de usuarios/citas por llamadas a la API REST Spring Boot del equipo, agregar los estados de carga/error y usar la sesión del login para el perfil. Las validaciones de duplicados, disponibilidad y último administrador también deben ejecutarse en el servidor. El alta de credenciales corresponde al flujo de autenticación que se integre.
 

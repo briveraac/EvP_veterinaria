@@ -22,7 +22,7 @@ const FIELD_RULES = {
       if (!value) return false
       const today = new Date()
       today.setHours(0, 0, 0, 0)
-      const selected = new Date(value)
+      const selected = new Date(`${value}T00:00:00`)
       return selected >= today
     },
     message: 'Elige una fecha igual o posterior a hoy.',
@@ -83,7 +83,7 @@ export function initAppointmentForm() {
     }
 
     if (statusEl) {
-      statusEl.textContent = '¡Solicitud enviada! Nuestro equipo se contactará contigo para confirmar tu hora.'
+      statusEl.textContent = '¡Formulario validado! Esta demostración no envía solicitudes. Contacta a la clínica para confirmar tu hora.'
       statusEl.classList.remove('form-status--error')
       statusEl.classList.add('form-status--success')
     }

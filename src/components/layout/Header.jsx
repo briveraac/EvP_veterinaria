@@ -5,7 +5,7 @@ function Header() {
   return (
     <header className="site-header">
       <div className="container header__inner">
-        <a className="logo" href="#inicio" aria-label="Veterinaria San Marcos — ir al inicio">
+        <a className="logo" href="/#inicio" aria-label="Veterinaria San Marcos — ir al inicio">
           <span className="logo__icon" aria-hidden="true">
             🐾
           </span>
@@ -30,19 +30,19 @@ function Header() {
             {user?.role === 'Administrador' && <li><a href="/admin#resumen">Panel admin</a></li>}
             <li>{user ? <button type="button" onClick={signOut}>Cerrar sesión</button> : <a href="/login">Iniciar sesión</a>}</li>
             <li>
-              <a href="#inicio">Inicio</a>
+              <a href="/#inicio">Inicio</a>
             </li>
             <li>
-              <a href="#nosotros">Sobre nosotros</a>
+              <a href="/#nosotros">Sobre nosotros</a>
             </li>
             <li>
-              <a href="#servicios">Servicios</a>
+              <a href="/#servicios">Servicios</a>
             </li>
             <li>
-              <a href="#contacto">Contacto</a>
+              <a href="/#contacto">Contacto</a>
             </li>
             <li>
-              <a className="main-nav__cta" href="#contacto">
+              <a className="main-nav__cta" href="/agendar">
                 Agenda tu hora
               </a>
             </li>

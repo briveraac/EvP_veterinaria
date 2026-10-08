@@ -10,16 +10,16 @@ function Footer() {
         <nav className="footer__nav" aria-label="Enlaces del pie de página">
           <ul>
             <li>
-              <a href="#inicio">Inicio</a>
+              <a href="/#inicio">Inicio</a>
             </li>
             <li>
-              <a href="#nosotros">Sobre nosotros</a>
+              <a href="/#nosotros">Sobre nosotros</a>
             </li>
             <li>
-              <a href="#servicios">Servicios</a>
+              <a href="/#servicios">Servicios</a>
             </li>
             <li>
-              <a href="#contacto">Contacto</a>
+              <a href="/#contacto">Contacto</a>
             </li>
           </ul>
         </nav>

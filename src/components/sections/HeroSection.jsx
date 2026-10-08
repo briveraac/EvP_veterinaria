@@ -25,7 +25,7 @@ function HeroSection() {
             </li>
           </ul>
           <div className="hero__actions">
-            <a className="btn btn--primary" href="#contacto">
+            <a className="btn btn--primary" href="/agendar">
               Agenda tu hora
             </a>
             <a className="btn btn--secondary" href="#servicios">
