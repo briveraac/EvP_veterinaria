@@ -1,4 +1,4 @@
-import { readData } from '../admin/adminData'
+import { readData } from '../admin/adminData.js'
 
 const SESSION_KEY = 'san-marcos-session'
 export const DEMO_PASSWORD = 'SanMarcos2026!'

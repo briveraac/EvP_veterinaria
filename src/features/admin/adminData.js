@@ -1,4 +1,4 @@
-import { INITIAL_USERS } from './adminUsers'
+import { INITIAL_USERS } from './adminUsers.js'
 
 export const ROLES = ['Administrador', 'Recepcionista', 'Dueño de mascota']
 export const SERVICES = ['Consulta general', 'Vacunación', 'Cirugía menor', 'Desparasitación', 'Control de peso']

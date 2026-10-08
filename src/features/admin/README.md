@@ -4,9 +4,9 @@ Abrir `/admin` con `npm run dev`. El sitio público sigue disponible en `/`.
 
 El módulo se carga de forma independiente desde `src/main.jsx`. `/admin` exige una sesión activa con rol Administrador; sin sesión redirige a `/login`, y los demás roles vuelven al sitio público.
 
-## Completar los dos usuarios
+## Usuarios iniciales
 
-Editar `src/features/admin/adminUsers.js`. El arreglo `INITIAL_USERS` contiene únicamente `Usuario 1` y `Usuario 2`. Reemplazar `name` y `email`; `role` define el permiso y `active` indica si la cuenta está activa. Mantener al menos un Administrador activo y conservar los identificadores `u1` y `u2`.
+Editar `src/features/admin/adminUsers.js`. El arreglo `INITIAL_USERS` contiene dos administradores y un dueño de mascota de demostración. `role` define el permiso y `active` indica si la cuenta está activa. Mantener al menos un Administrador activo y conservar los identificadores existentes.
 
 También se pueden completar desde `/admin`, con el botón **Editar** de cada usuario. La vista de usuarios se abre por defecto.
 
@@ -32,11 +32,11 @@ No desplegar este modo de demostración con datos reales. Para reiniciar los dat
 ## Estructura
 
 - `AdminPage.jsx`: navegación, vistas y operaciones.
-- `AdminEntry.jsx`: carga diferida del panel, con estado de espera.
+- `AdminEntry.jsx`: comprobación de sesión y rol, carga diferida del panel y estado de espera.
 - `AdminEditor.jsx`: formularios en diálogo nativo, con foco y cierre mediante Escape.
 - `AdminIcon.jsx`: iconos SVG sin dependencias externas.
 - `adminData.js`: modelos de demostración, persistencia y exportación.
-- `adminUsers.js`: datos iniciales de los dos usuarios, para completar después.
+- `adminUsers.js`: datos iniciales de las cuentas de demostración.
 - `admin.css`: estilos propios; navegación móvil y tablas con desplazamiento horizontal.
 
 Validar con `npm run build` y `npm run lint`.
