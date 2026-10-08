@@ -25,9 +25,9 @@ function Footer() {
         </nav>
 
         <div className="footer__contact">
-          <p>[COMPLETAR: dirección exacta], Rancagua</p>
-          <p>[COMPLETAR: teléfono]</p>
-          <p>[COMPLETAR: correo electrónico]</p>
+          <p>[Plaza de los Héroes 445, Rancagua], Rancagua</p>
+          <p>[+56 2 3212 3456]</p>
+          <p>[clinica.evpveterinaria@gmail.com]</p>
         </div>
 
         <div className="footer__social">
