@@ -20,12 +20,12 @@ function AboutSection() {
             </li>
             <li>3 médicos veterinarios</li>
             <li>1 técnico veterinario</li>
-            <li>1 recepcionista administrativa</li>
+            <li>2 Administradores</li>
           </ul>
         </div>
         <div className="about__media">
           <video controls preload="none" poster="assets/img/video-poster.jpg" width="640" height="360">
-            <source src="assets/video/conoce-la-clinica.mp4" type="video/mp4" />
+            <source src="assets/video/presentacion_veterinaria.mp4" type="video/mp4" />
             Tu navegador no soporta la reproducción de video. Puedes{' '}
             <a href="assets/video/conoce-la-clinica.mp4">descargar el video aquí</a>.
           </video>
