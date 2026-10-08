@@ -35,7 +35,7 @@ function HeroSection() {
         </div>
         <div className="hero__media">
           <img
-            src="assets/img/hero-veterinaria.jpg"
+            src="assets/img/hero-veterinaria.png"
             alt="Equipo veterinario de Veterinaria San Marcos atendiendo a una mascota"
             width="640"
             height="480"
