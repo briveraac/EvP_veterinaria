@@ -25,7 +25,7 @@ function Footer() {
         </nav>
 
         <div className="footer__contact">
-          <p>[Plaza de los Héroes 445, Rancagua], Rancagua</p>
+          <p>[Carlos María O'Carrol 695, Rancagua, Región de O'Higgins], Rancagua</p>
           <p>[+56 2 3212 3456]</p>
           <p>[clinica.evpveterinaria@gmail.com]</p>
         </div>
