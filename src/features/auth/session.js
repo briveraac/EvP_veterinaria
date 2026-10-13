@@ -1,4 +1,5 @@
 import { readData } from '../admin/adminData.js';
+import { sitePath } from '../../utils/paths.js';
 const SESSION_KEY = 'san-marcos-session';
 export const DEMO_PASSWORD = 'SanMarcos2026!';
 export function getSession() {
@@ -46,5 +47,5 @@ export function signIn(email, password) {
 }
 export function signOut() {
   sessionStorage.removeItem(SESSION_KEY);
-  window.location.assign('/login');
+  window.location.assign(sitePath('login'));
 }

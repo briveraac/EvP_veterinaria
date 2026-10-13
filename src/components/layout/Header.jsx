@@ -1,11 +1,12 @@
 import { getSession, signOut } from '../../features/auth/session'
+import { sitePath } from '../../utils/paths.js'
 
 function Header() {
   const user = getSession()
   return (
     <header className="site-header">
       <div className="container header__inner">
-        <a className="logo" href="/#inicio" aria-label="Veterinaria San Marcos — ir al inicio">
+        <a className="logo" href={`${sitePath()}#inicio`} aria-label="Veterinaria San Marcos — ir al inicio">
           <span className="logo__icon" aria-hidden="true">
             🐾
           </span>
@@ -27,22 +28,22 @@ function Header() {
 
         <nav className="main-nav" id="mainNav" aria-label="Navegación principal">
           <ul className="main-nav__list">
-            {user?.role === 'Administrador' && <li><a href="/admin#resumen">Panel admin</a></li>}
-            <li>{user ? <button type="button" onClick={signOut}>Cerrar sesión</button> : <a href="/login">Iniciar sesión</a>}</li>
+            {user?.role === 'Administrador' && <li><a href={`${sitePath('admin')}#resumen`}>Panel admin</a></li>}
+            <li>{user ? <button type="button" onClick={signOut}>Cerrar sesión</button> : <a href={sitePath('login')}>Iniciar sesión</a>}</li>
             <li>
-              <a href="/#inicio">Inicio</a>
+              <a href={`${sitePath()}#inicio`}>Inicio</a>
             </li>
             <li>
-              <a href="/#nosotros">Sobre nosotros</a>
+              <a href={`${sitePath()}#nosotros`}>Sobre nosotros</a>
             </li>
             <li>
-              <a href="/#servicios">Servicios</a>
+              <a href={`${sitePath()}#servicios`}>Servicios</a>
             </li>
             <li>
-              <a href="/#contacto">Contacto</a>
+              <a href={`${sitePath()}#contacto`}>Contacto</a>
             </li>
             <li>
-              <a className="main-nav__cta" href="/agendar">
+              <a className="main-nav__cta" href={sitePath('agendar')}>
                 Agenda tu hora
               </a>
             </li>

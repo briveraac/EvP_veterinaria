@@ -1,3 +1,5 @@
+import { sitePath } from '../../utils/paths.js'
+
 function HeroSection() {
   return (
     <section className="hero" id="inicio" aria-labelledby="hero-title">
@@ -25,7 +27,7 @@ function HeroSection() {
             </li>
           </ul>
           <div className="hero__actions">
-            <a className="btn btn--primary" href="/agendar">
+            <a className="btn btn--primary" href={sitePath('agendar')}>
               Agenda tu hora
             </a>
             <a className="btn btn--secondary" href="#servicios">
@@ -35,7 +37,7 @@ function HeroSection() {
         </div>
         <div className="hero__media">
           <img
-            src="assets/img/hero-veterinaria.png"
+            src={sitePath('assets/img/hero-veterinaria.png')}
             alt="Equipo veterinario de Veterinaria San Marcos atendiendo a una mascota"
             width="640"
             height="480"

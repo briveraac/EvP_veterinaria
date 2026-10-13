@@ -4,6 +4,7 @@ import Footer from '../../components/layout/Footer';
 import SkipLink from '../../components/layout/SkipLink';
 import AppointmentForm from './AppointmentForm.jsx';
 import { initSiteUi } from './initSiteUi';
+import { sitePath } from '../../utils/paths.js';
 export default function AppointmentPage() {
   useEffect(() => {
     document.title = 'Agendar hora | Veterinaria San Marcos';
@@ -14,7 +15,7 @@ export default function AppointmentPage() {
     <Header />
     <main id="contenido-principal" className="appointment-page">
       <div className="container">
-        <a className="page-back" href="/">← Volver a la página principal</a>
+        <a className="page-back" href={sitePath()}>← Volver a la página principal</a>
         <div className="appointment-layout">
           <section className="appointment-intro" aria-labelledby="appointment-title">
             <p className="hero__eyebrow">Estamos para acompañarte</p>

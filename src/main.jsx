@@ -3,10 +3,11 @@ import App from './App.jsx';
 import AdminEntry from './features/admin/AdminEntry.jsx';
 import LoginPage from './features/auth/LoginPage.jsx';
 import AppointmentPage from './features/site/AppointmentPage.jsx';
+import { BASE_URL } from './utils/paths.js';
 import './styles/main.css';
 
 // Elegimos la página según la dirección del navegador.
-const path = window.location.pathname;
+const path = window.location.pathname.replace(BASE_URL.replace(/\/$/, ''), '') || '/';
 let page = <App />;
 if (path === '/admin' || path.startsWith('/admin/')) {
   page = <AdminEntry />;

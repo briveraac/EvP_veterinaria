@@ -1,3 +1,5 @@
+import { sitePath } from '../../utils/paths.js'
+
 function ServicesSection() {
   return (
     <section className="services" id="servicios" aria-labelledby="services-title">
@@ -9,7 +11,7 @@ function ServicesSection() {
         </p>
         <div className="services__grid">
           <article className="service-card">
-            <img className="service-card__icon" src="assets/img/icon-consulta.png" alt="" width="48" height="48" />
+            <img className="service-card__icon" src={sitePath('assets/img/icon-consulta.png')} alt="" width="48" height="48" />
             <h3>Consultas generales</h3>
             <p>
               Evaluación integral de la salud de tu mascota: revisión clínica, diagnóstico y
@@ -17,7 +19,7 @@ function ServicesSection() {
             </p>
           </article>
           <article className="service-card">
-            <img className="service-card__icon" src="assets/img/icon-vacunacion.png" alt="" width="48" height="48" />
+            <img className="service-card__icon" src={sitePath('assets/img/icon-vacunacion.png')} alt="" width="48" height="48" />
             <h3>Vacunación</h3>
             <p>
               Plan de vacunación según especie y edad, para prevenir enfermedades y mantener al día
@@ -25,7 +27,7 @@ function ServicesSection() {
             </p>
           </article>
           <article className="service-card">
-            <img className="service-card__icon" src="assets/img/icon-cirugia.png" alt="" width="48" height="48" />
+            <img className="service-card__icon" src={sitePath('assets/img/icon-cirugia.png')} alt="" width="48" height="48" />
             <h3>Cirugía menor</h3>
             <p>
               Procedimientos quirúrgicos ambulatorios de baja complejidad, realizados por nuestro
@@ -35,7 +37,7 @@ function ServicesSection() {
           <article className="service-card">
             <img
               className="service-card__icon"
-              src="assets/img/icon-desparasitacion.png"
+              src={sitePath('assets/img/icon-desparasitacion.png')}
               alt=""
               width="48"
               height="48"
@@ -49,7 +51,7 @@ function ServicesSection() {
           <article className="service-card">
             <img
               className="service-card__icon"
-              src="assets/img/icon-control-peso.png"
+              src={sitePath('assets/img/icon-control-peso.png')}
               alt=""
               width="48"
               height="48"

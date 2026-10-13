@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { DEMO_PASSWORD, signIn } from './session';
+import { sitePath } from '../../utils/paths.js';
 export default function LoginPage() {
   const [error, setError] = useState('');
   const [user, setUser] = useState(null);
@@ -15,32 +16,32 @@ export default function LoginPage() {
       const account = signIn(fields.get('email'), fields.get('password'));
       if (account.role === 'Administrador') {
         setUser(account);
-      } else window.location.assign('/');
+      } else window.location.assign(sitePath());
     } catch (err) {
       setError(err.message);
     }
   }
   return <main className="access-page" id="contenido-principal">
     <div className="container">
-      <a className="page-back" href="/">← Volver a la página principal</a>
+      <a className="page-back" href={sitePath()}>← Volver a la página principal</a>
       <div className="access-layout">
         <section className="access-intro">
-          <a className="logo" href="/">
+          <a className="logo" href={sitePath()}>
             <span className="logo__icon" aria-hidden="true">🐾</span>
             <span className="logo__text">Veterinaria San Marcos</span>
           </a>
           <p className="hero__eyebrow">Cerca de ti y de tu mascota</p>
           <h1>Un lugar para cuidar lo que más quieres.</h1>
           <p>Accede a tu cuenta y sigue acompañándonos en el cuidado de tu mascota.</p>
-          <img src="/assets/img/hero-veterinaria.png" alt="Equipo veterinario atendiendo a una mascota" width="640" height="480" />
+          <img src={sitePath('assets/img/hero-veterinaria.png')} alt="Equipo veterinario atendiendo a una mascota" width="640" height="480" />
         </section>
         <section className="access-card" aria-labelledby="login-title">
           {user ? <>
             <p className="hero__eyebrow">Cuenta de administrador</p>
             <h2 id="login-title">Hola, {user.name}</h2>
             <p>Tu sesión está lista. ¿Dónde quieres continuar?</p>
-            <a className="btn btn--primary" href="/admin#resumen">Ir al panel de administración</a>
-            <a className="btn btn--secondary" href="/">Ir a la página principal</a>
+            <a className="btn btn--primary" href={`${sitePath('admin')}#resumen`}>Ir al panel de administración</a>
+            <a className="btn btn--secondary" href={sitePath()}>Ir a la página principal</a>
           </> : <>
             <p className="hero__eyebrow">Bienvenido de nuevo</p>
             <h2 id="login-title">Iniciar sesión</h2>

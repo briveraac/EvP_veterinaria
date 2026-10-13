@@ -1,3 +1,5 @@
+import { sitePath } from '../../utils/paths.js'
+
 function ContactSection() {
   return (
     <section className="contact" id="contacto" aria-labelledby="contact-title">
@@ -48,7 +50,7 @@ function ContactSection() {
           </div>
         </div>
 
-<aside className="contact-booking"><h3>Una hora para su bienestar</h3><p>Solicita atención para tu mascota en nuestra página de agendamiento.</p><a className="btn btn--primary" href="/agendar">Agenda tu hora</a></aside>
+<aside className="contact-booking"><h3>Una hora para su bienestar</h3><p>Solicita atención para tu mascota en nuestra página de agendamiento.</p><a className="btn btn--primary" href={sitePath('agendar')}>Agenda tu hora</a></aside>
       </div>
     </section>
   )
