@@ -12,6 +12,7 @@ const paths = {
   download: 'M12 3v12 M7 10l5 5 5-5 M4 16v5h16v-5',
   edit: 'M15 5l4 4 M4 20l4-1L20 7a2.8 2.8 0 0 0-4-4L4 15z',
   close: 'M6 6l12 12 M18 6L6 18',
+  trash: 'M4 7h16 M10 11v6 M14 11v6 M6 7l1 13h10l1-13 M9 7V4h6v3',
   menu: 'M4 6h16 M4 12h16 M4 18h16',
   external: 'M14 3h7v7 M21 3l-9 9 M10 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5',
   shield: 'M12 2l8 4v6c0 5-8 10-8 10S4 17 4 12V6z M8 12l3 3 5-6',

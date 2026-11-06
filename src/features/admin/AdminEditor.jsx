@@ -14,7 +14,7 @@ export default function AdminEditor({
     element.showModal();
     return () => element.close();
   }, []);
-  function submit(event) {
+  async function submit(event) {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
     let item;
@@ -45,12 +45,14 @@ export default function AdminEditor({
         return;
       }
     }
+    // Las citas nuevas no llevan id: lo crea la base de datos del backend.
     if (editor.item) {
       item.id = editor.item.id;
-    } else {
+    } else if (isUser) {
       item.id = crypto.randomUUID();
     }
-    const message = onSave(item);
+    // Para las citas, onSave espera la respuesta del backend.
+    const message = await onSave(item);
     if (message) {
       setError(message);
     }

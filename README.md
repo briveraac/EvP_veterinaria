@@ -2,7 +2,12 @@
 
 Proyecto en React y Vite. Tiene una página principal, login, formulario para pedir una hora y un panel de administración.
 
+Este repositorio es el **frontend**. Las citas del panel se guardan en el **backend** (Spring Boot), que está en otro repositorio: `EvP_veterinaria_backend`.
+
 ## Cómo ejecutarlo
+
+1. Enciende primero el backend (ver su README). Queda en `http://localhost:8080`.
+2. Luego, en este proyecto:
 
 - `npm install`: instalar las dependencias.
 - `npm run dev`: abrir el proyecto en desarrollo.
@@ -22,6 +27,7 @@ Proyecto en React y Vite. Tiene una página principal, login, formulario para pe
 - `src/features/site/AppointmentPage.jsx`: página para pedir una hora.
 - `src/features/auth`: login y sesión del usuario.
 - `src/features/admin`: usuarios, citas y reportes.
+- `src/services/CitaService.js`: llamadas a la API REST de citas con axios.
 - `src/styles`: estilos del sitio. Los colores comunes están en `tokens.css`.
 - `public/assets`: imágenes y video.
 
@@ -39,10 +45,14 @@ En `/login`, el rol se obtiene del usuario. El administrador puede entrar al pan
 
 El panel permite crear y editar usuarios y citas, activar cuentas, cambiar roles, confirmar citas, buscar, filtrar y descargar reportes CSV. Debe quedar al menos un administrador activo y no se permiten correos repetidos ni citas no canceladas para el mismo veterinario a la misma hora.
 
-Los usuarios iniciales están en `src/features/admin/adminUsers.js`. Los cambios del panel se guardan en `localStorage` con la clave `san-marcos-admin-demo-v2`. Se conservan al recargar. La sesión se guarda en `sessionStorage` y dura ocho horas.
+Las citas se piden al backend con `GET`, `POST`, `PUT` y `DELETE` en `/api/citas`. El backend valida que un veterinario no tenga dos citas a la misma hora. Si el backend está apagado, el panel muestra un aviso.
+
+Los usuarios iniciales están en `src/features/admin/adminUsers.js`. Los cambios de usuarios se guardan en `localStorage` con la clave `san-marcos-admin-demo-v2`. Se conservan al recargar. La sesión se guarda en `sessionStorage` y dura ocho horas.
 
 El formulario de `/agendar` valida los datos y completa nombre y correo si hay una sesión. Es una demostración: no envía solicitudes ni crea citas en el panel.
 
-No hay backend. El login usa una contraseña de ejemplo; para uso real hace falta un servidor que valide las credenciales y los permisos.
+La dirección del backend se puede cambiar creando un archivo `.env` con `VITE_API_URL=http://otra-direccion:8080`.
+
+El login todavía no usa el backend: usa una contraseña de ejemplo; para uso real hace falta un servidor que valide las credenciales y los permisos.
 
 Al publicar, el hosting debe servir `index.html` también para `/login`, `/admin` y `/agendar`. Vite ya lo hace en desarrollo.

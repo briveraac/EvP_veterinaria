@@ -5,6 +5,7 @@ import { downloadReport, localDate, readData, ROLES, SERVICES, STATUSES, STORAGE
 import './admin.css';
 import { sitePath } from '../../utils/paths.js';
 import { signOut } from '../auth/session';
+import CitaService, { errorMessage } from '../../services/CitaService';
 const navigation = [{
   id: 'resumen',
   label: 'Resumen'
@@ -66,7 +67,9 @@ function Empty({
 }
 export default function AdminPage() {
   const [view, setView] = useState(currentView);
-  const [data, setData] = useState(readData);
+  // Los usuarios siguen en el navegador. Las citas llegan desde el backend.
+  const [data, setData] = useState(() => ({ ...readData(), appointments: [] }));
+  const [apiError, setApiError] = useState('');
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState('Todos');
   const [menuOpen, setMenuOpen] = useState(false);
@@ -94,6 +97,11 @@ export default function AdminPage() {
       window.removeEventListener('hashchange', handleHash);
       document.title = title;
     };
+  }, []);
+
+  // GET /api/citas: pedimos las citas al backend al abrir el panel.
+  useEffect(() => {
+    loadAppointments();
   }, []);
   useEffect(() => {
     if (!notice) {
@@ -127,7 +135,35 @@ export default function AdminPage() {
     setData(next);
     setNotice(message);
   }
+  function loadAppointments() {
+    CitaService.getAll().then(response => {
+      setData(current => ({ ...current, appointments: response.data }));
+      setApiError('');
+    }).catch(error => {
+      setApiError(errorMessage(error));
+    });
+  }
+
+  // POST si la cita es nueva, PUT si ya existía.
+  // Devuelve una promesa con el mensaje de error ('' si todo salió bien).
+  function saveAppointment(item) {
+    let request;
+    if (editor.item) {
+      request = CitaService.update(item.id, item);
+    } else {
+      request = CitaService.create(item);
+    }
+    return request.then(() => {
+      loadAppointments();
+      setNotice('Cambios guardados correctamente.');
+      setEditor(null);
+      return '';
+    }).catch(error => errorMessage(error));
+  }
   function save(item) {
+    if (editor.type === 'appointment') {
+      return saveAppointment(item);
+    }
     if (editor.type === 'user') {
       let otherAdmin = false;
       for (const user of data.users) {
@@ -155,26 +191,6 @@ export default function AdminPage() {
         ...data,
         users
       }, 'Cambios guardados correctamente.');
-    } else {
-      if (item.status !== 'Cancelada') {
-        for (const appointment of data.appointments) {
-          const sameTime = appointment.date === item.date && appointment.time === item.time;
-          if (appointment.id !== item.id && appointment.status !== 'Cancelada' && appointment.vet === item.vet && sameTime) {
-            return 'El veterinario ya tiene una cita en esa fecha y hora.';
-          }
-        }
-      }
-      const appointments = [...data.appointments];
-      const index = appointments.findIndex(appointment => appointment.id === item.id);
-      if (index === -1) {
-        appointments.push(item);
-      } else {
-        appointments[index] = item;
-      }
-      persist({
-        ...data,
-        appointments
-      }, 'Cambios guardados correctamente.');
     }
     setEditor(null);
   }
@@ -200,16 +216,25 @@ export default function AdminPage() {
     }, message);
   }
   function confirmAppointment(appointment) {
-    const appointments = [...data.appointments];
-    const index = appointments.findIndex(item => item.id === appointment.id);
-    appointments[index] = {
-      ...appointment,
-      status: 'Confirmada'
-    };
-    persist({
-      ...data,
-      appointments
-    }, 'Cita confirmada.');
+    CitaService.update(appointment.id, { ...appointment, status: 'Confirmada' }).then(() => {
+      loadAppointments();
+      setNotice('Cita confirmada.');
+    }).catch(error => {
+      setNotice(errorMessage(error));
+    });
+  }
+
+  // DELETE /api/citas/{id}
+  function deleteAppointment(appointment) {
+    if (!window.confirm(`¿Eliminar la cita de ${appointment.pet}?`)) {
+      return;
+    }
+    CitaService.delete(appointment.id).then(() => {
+      loadAppointments();
+      setNotice('Cita eliminada.');
+    }).catch(error => {
+      setNotice(errorMessage(error));
+    });
   }
   function openUserEditor(user) {
     setEditor({ type: 'user', item: user });
@@ -325,6 +350,9 @@ export default function AdminPage() {
               <button className="admin-icon-button" onClick={() => openAppointmentEditor(item)} aria-label={`Editar cita de ${item.pet}`} title="Editar o reagendar">
                 <AdminIcon name="edit" size={18} />
               </button>
+              <button className="admin-icon-button" onClick={() => deleteAppointment(item)} aria-label={`Eliminar cita de ${item.pet}`} title="Eliminar cita">
+                <AdminIcon name="trash" size={18} />
+              </button>
             </div>
           </td>
         </tr>)}</tbody>
@@ -355,7 +383,8 @@ export default function AdminPage() {
           </div>
           {view !== 'reportes' && <button className="admin-button" onClick={openNewEditor}>{view === 'usuarios' ? 'Nuevo usuario' : 'Nueva cita'}</button>}
         </div>
-        <p className="admin-demo-note">Datos de ejemplo. Los cambios se guardan en este navegador.</p>
+        <p className="admin-demo-note">Las citas se guardan en el backend. Los usuarios se guardan en este navegador.</p>
+        {apiError && <p className="admin-error" role="alert">{apiError}</p>}
         {storageError && <p className="admin-error" role="alert">El navegador no permite guardar los datos. Los cambios estarán disponibles solo durante esta sesión.</p>}
         {view === 'resumen' && <>
           <div className="admin-stats">{stats.map(stat => <article className="admin-stat" key={stat.label}>
