@@ -16,6 +16,7 @@ export default function AdminEditor({
   }, []);
   async function submit(event) {
     event.preventDefault();
+    setError('');
     const form = new FormData(event.currentTarget);
     let item;
     if (isUser) {
@@ -31,6 +32,18 @@ export default function AdminEditor({
         setError('Ingresa un nombre de al menos 3 caracteres.');
         return;
       }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(item.email)) {
+        setError('Ingresa un correo electrónico válido, por ejemplo nombre@sanmarcos.cl.');
+        return;
+      }
+      if (!editor.item && !item.password) {
+        setError('Ingresa una contraseña.');
+        return;
+      }
+      if (item.password && item.password.length < 6) {
+        setError('La contraseña debe tener al menos 6 caracteres.');
+        return;
+      }
     } else {
       item = {
         pet: form.get('pet').trim(),
@@ -42,8 +55,20 @@ export default function AdminEditor({
         vet: form.get('vet'),
         status: form.get('status')
       };
-      if (!item.pet || !item.owner || !item.vet) {
-        setError('Completa los datos de la cita.');
+      if (!item.pet) {
+        setError('Ingresa el nombre de la mascota.');
+        return;
+      }
+      if (!item.owner) {
+        setError('Ingresa el nombre del dueño de la mascota.');
+        return;
+      }
+      if (!item.date || !item.time) {
+        setError('Elige la fecha y la hora de la cita.');
+        return;
+      }
+      if (!item.vet) {
+        setError('Elige un veterinario.');
         return;
       }
       // Revisamos fecha y horario al crear o al reagendar (el backend vuelve a revisarlo).
@@ -70,7 +95,9 @@ export default function AdminEditor({
       onClose();
     }
   }} aria-labelledby="editor-title">
-    <form onSubmit={submit}>
+    {/* noValidate: desactiva los mensajes automáticos del navegador (salen en inglés).
+        Validamos nosotros en submit() con mensajes en español. */}
+    <form onSubmit={submit} noValidate>
       <div className="admin-dialog-heading">
         <div>
           <span className="admin-eyebrow">{isUser ? 'GESTIÓN DE ACCESOS' : 'AGENDA DE LA CLÍNICA'}</span>

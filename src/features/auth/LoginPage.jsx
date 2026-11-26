@@ -16,6 +16,11 @@ export default function LoginPage() {
     setError('');
     setLoading(true);
     const fields = new FormData(event.currentTarget);
+    if (!fields.get('email').trim() || !fields.get('password')) {
+      setError('Ingresa tu correo y tu contraseña.');
+      setLoading(false);
+      return;
+    }
     try {
       const account = await signIn(fields.get('email'), fields.get('password'));
       // Administrador y Recepcionista pueden elegir ir al panel.
@@ -52,7 +57,7 @@ export default function LoginPage() {
             <p className="hero__eyebrow">Bienvenido de nuevo</p>
             <h2 id="login-title">Iniciar sesión</h2>
             <p>Ingresa tus datos para continuar.</p>
-            <form className="access-form" onSubmit={submit}>
+            <form className="access-form" onSubmit={submit} noValidate>
               <div className="form-field">
                 <label htmlFor="login-email">Correo electrónico</label>
                 <input id="login-email" name="email" type="email" autoComplete="username" placeholder="tu@correo.cl" required />
