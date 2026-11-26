@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import AdminIcon from './AdminIcon';
-import { localDate, ROLES, SERVICES, STATUSES } from './adminData';
+import { checkSchedule, localDate, ROLES, SERVICES, STATUSES } from './adminData';
 export default function AdminEditor({
   editor,
   onClose,
@@ -44,6 +44,13 @@ export default function AdminEditor({
       };
       if (!item.pet || !item.owner || !item.vet) {
         setError('Completa los datos de la cita.');
+        return;
+      }
+      // Revisamos fecha y horario al crear o al reagendar (el backend vuelve a revisarlo).
+      const changedDate = !editor.item || editor.item.date !== item.date || editor.item.time !== item.time;
+      const scheduleError = changedDate ? checkSchedule(item.date, item.time) : '';
+      if (scheduleError) {
+        setError(scheduleError);
         return;
       }
     }
@@ -92,7 +99,8 @@ export default function AdminEditor({
           <label className="admin-field">Especie<select aria-label="Especie" name="species" defaultValue={item.species || 'Perro'}>{['Perro', 'Gato', 'Conejo', 'Ave'].map(species => <option key={species}>{species}</option>)}</select></label>
           <label className="admin-field admin-field-wide">Dueño de la mascota<input name="owner" defaultValue={item.owner} required maxLength={100} /></label>
           <label className="admin-field">Fecha<input name="date" type="date" defaultValue={item.date || localDate()} required min={editor.item ? undefined : localDate()} /></label>
-          <label className="admin-field">Hora<input name="time" type="time" defaultValue={item.time || '09:00'} required /></label>
+          <label className="admin-field">Hora<input name="time" type="time" defaultValue={item.time || '09:00'} required min="09:00" max="19:29" /></label>
+          <p className="admin-muted admin-field-wide">Horario de atención: lunes a viernes de 09:00 a 19:30 y sábado de 10:00 a 15:00. Domingo cerrado.</p>
           <label className="admin-field admin-field-wide">Servicio<select aria-label="Servicio" name="service" defaultValue={item.service || SERVICES[0]}>{SERVICES.map(service => <option key={service}>{service}</option>)}</select></label>
           <label className="admin-field">Veterinario<select aria-label="Veterinario" name="vet" defaultValue={item.vet || 'Dra. Sofía Herrera'}>{['Dra. Sofía Herrera', 'Dr. Nicolás Vega', 'Dra. Paula Fuentes'].map(vet => <option key={vet}>{vet}</option>)}</select></label>
           <label className="admin-field">Estado<select aria-label="Estado" name="status" defaultValue={item.status || 'Pendiente'}>{STATUSES.map(status => <option key={status}>{status}</option>)}</select></label>

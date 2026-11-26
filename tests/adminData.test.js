@@ -1,6 +1,19 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import { downloadReport, localDate } from '../src/features/admin/adminData.js'
+import { checkSchedule, downloadReport, localDate } from '../src/features/admin/adminData.js'
+
+test('valida fechas pasadas y horario de atención', () => {
+  const now = new Date(2026, 10, 25, 12, 0) // miércoles 25-11-2026 12:00
+  assert.match(checkSchedule('2026-11-24', '10:00', now), /ya pasó/)
+  assert.match(checkSchedule('2026-11-25', '11:00', now), /ya pasó/)
+  assert.equal(checkSchedule('2026-11-25', '15:00', now), '')
+  assert.match(checkSchedule('2026-11-29', '11:00', now), /domingos/) // domingo
+  assert.match(checkSchedule('2026-11-26', '08:30', now), /horario/)  // jueves temprano
+  assert.match(checkSchedule('2026-11-26', '19:30', now), /horario/)  // jueves al cierre
+  assert.equal(checkSchedule('2026-11-26', '19:00', now), '')
+  assert.match(checkSchedule('2026-11-28', '16:00', now), /horario/)  // sábado tarde
+  assert.equal(checkSchedule('2026-11-28', '10:00', now), '')
+})
 
 test('genera fechas locales con mes y día de dos dígitos', () => {
   assert.equal(localDate(new Date(2026, 0, 5)), '2026-01-05')

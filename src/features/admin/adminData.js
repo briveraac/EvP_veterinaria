@@ -7,6 +7,30 @@ export function localDate(date = new Date()) {
   const day = String(date.getDate()).padStart(2, '0');
   return year + '-' + month + '-' + day;
 }
+// Revisa que la cita no sea en el pasado y que esté dentro del horario de atención:
+// lunes a viernes de 09:00 a 19:30, sábado de 10:00 a 15:00, domingo cerrado.
+// Devuelve el mensaje de error o '' si está bien. (Las mismas reglas que CitaService en el backend.)
+export function checkSchedule(date, time, now = new Date()) {
+  const day = new Date(date + 'T12:00:00').getDay(); // 0 = domingo, 6 = sábado
+  const currentTime = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+  if (date < localDate(now) || (date === localDate(now) && time < currentTime)) {
+    return 'No se puede agendar una cita en una fecha u hora que ya pasó.';
+  }
+  if (day === 0) {
+    return 'Los domingos la clínica está cerrada.';
+  }
+  let opens = '09:00';
+  let closes = '19:30';
+  if (day === 6) {
+    opens = '10:00';
+    closes = '15:00';
+  }
+  if (time < opens || time >= closes) {
+    return 'Fuera del horario de atención. Lunes a viernes de 09:00 a 19:30 y sábado de 10:00 a 15:00.';
+  }
+  return '';
+}
+
 export function downloadReport(appointments) {
   const rows = [['Mascota', 'Especie', 'Dueño', 'Servicio', 'Fecha', 'Hora', 'Veterinario', 'Estado']];
   for (const item of appointments) {
