@@ -23,7 +23,9 @@ export default function AdminEditor({
         name: form.get('name').trim(),
         email: form.get('email').trim(),
         role: form.get('role'),
-        active: form.get('active') === 'true'
+        active: form.get('active') === 'true',
+        // Al editar, si se deja vacía el backend mantiene la contraseña anterior.
+        password: form.get('password')
       };
       if (item.name.length < 3) {
         setError('Ingresa un nombre de al menos 3 caracteres.');
@@ -45,13 +47,11 @@ export default function AdminEditor({
         return;
       }
     }
-    // Las citas nuevas no llevan id: lo crea la base de datos del backend.
+    // Los registros nuevos no llevan id: lo crea la base de datos del backend.
     if (editor.item) {
       item.id = editor.item.id;
-    } else if (isUser) {
-      item.id = crypto.randomUUID();
     }
-    // Para las citas, onSave espera la respuesta del backend.
+    // onSave espera la respuesta del backend y devuelve el mensaje de error ('' si salió bien).
     const message = await onSave(item);
     if (message) {
       setError(message);
@@ -81,6 +81,7 @@ export default function AdminEditor({
           {isUser ? <>
           <label className="admin-field admin-field-wide">Nombre completo<input name="name" defaultValue={item.name} required minLength={3} maxLength={100} autoComplete="name" autoFocus /></label>
           <label className="admin-field admin-field-wide">Correo electrónico<input name="email" type="email" defaultValue={item.email} required maxLength={150} autoComplete="email" /></label>
+          <label className="admin-field admin-field-wide">{editor.item ? 'Nueva contraseña (opcional)' : 'Contraseña'}<input name="password" type="password" required={!editor.item} minLength={6} maxLength={100} autoComplete="new-password" placeholder={editor.item ? 'Déjala vacía para no cambiarla' : 'Mínimo 6 caracteres'} /></label>
           <label className="admin-field">Rol<select aria-label="Rol" name="role" defaultValue={item.role || ROLES[2]}>{ROLES.map(role => <option key={role}>{role}</option>)}</select></label>
           <label className="admin-field">Estado<select aria-label="Estado" name="active" defaultValue={String(item.active ?? true)}>
               <option value="true">Activo</option>

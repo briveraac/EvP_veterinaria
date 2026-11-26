@@ -1,37 +1,6 @@
 import assert from 'node:assert/strict'
-import { afterEach, beforeEach, test } from 'node:test'
-import { downloadReport, localDate, readData, seedData, STORAGE_KEY } from '../src/features/admin/adminData.js'
-
-beforeEach(() => {
-  const values = new Map()
-  globalThis.localStorage = {
-    getItem: key => values.get(key) ?? null,
-    setItem: (key, value) => values.set(key, value),
-  }
-})
-
-afterEach(() => {
-  delete globalThis.localStorage
-})
-
-test('conserva usuarios y citas guardados al volver a leer', () => {
-  const data = seedData()
-  data.users[0].name = 'Nombre editado'
-  data.appointments[0].status = 'Cancelada'
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
-  assert.deepEqual(readData(), data)
-})
-
-test('recupera los datos de ejemplo cuando el almacenamiento está dañado', () => {
-  for (const invalid of ['no es JSON', '{}', '{"users":[null],"appointments":[]}']) {
-    localStorage.setItem(STORAGE_KEY, invalid)
-    assert.deepEqual(readData(), seedData())
-  }
-  const data = seedData()
-  data.appointments[0].status = 'Estado desconocido'
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
-  assert.deepEqual(readData(), seedData())
-})
+import { test } from 'node:test'
+import { downloadReport, localDate } from '../src/features/admin/adminData.js'
 
 test('genera fechas locales con mes y día de dos dígitos', () => {
   assert.equal(localDate(new Date(2026, 0, 5)), '2026-01-05')
@@ -49,9 +18,7 @@ test('el CSV conserva comillas, separadores, acentos y protección contra fórmu
   URL.revokeObjectURL = () => {}
 
   try {
-    const appointment = seedData().appointments[0]
-    appointment.pet = '=SUM(1;2)'
-    appointment.owner = 'María "Paz"'
+    const appointment = { pet: '=SUM(1;2)', species: 'Perro', owner: 'María "Paz"', service: 'Consulta general', date: '2026-11-05', time: '09:00', vet: 'Dra. Sofía Herrera', status: 'Pendiente' }
     downloadReport([appointment])
     const bytes = new Uint8Array(await file.arrayBuffer())
     assert.deepEqual([...bytes.slice(0, 3)], [239, 187, 191])

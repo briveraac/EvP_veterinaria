@@ -1,25 +1,31 @@
 import { useEffect, useState } from 'react';
-import { DEMO_PASSWORD, signIn } from './session';
+import { signIn } from './session';
 import { sitePath } from '../../utils/paths.js';
+const DEMO_PASSWORD = 'SanMarcos2026!';
 export default function LoginPage() {
   const [error, setError] = useState('');
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   useEffect(() => {
     document.title = 'Iniciar sesión | Veterinaria San Marcos';
   }, []);
-  function submit(event) {
+  // El backend revisa la contraseña y devuelve un token JWT.
+  async function submit(event) {
     event.preventDefault();
     setError('');
+    setLoading(true);
     const fields = new FormData(event.currentTarget);
     try {
-      const account = signIn(fields.get('email'), fields.get('password'));
-      if (account.role === 'Administrador') {
+      const account = await signIn(fields.get('email'), fields.get('password'));
+      // Administrador y Recepcionista pueden elegir ir al panel.
+      if (account.role === 'Administrador' || account.role === 'Recepcionista') {
         setUser(account);
       } else window.location.assign(sitePath());
     } catch (err) {
       setError(err.message);
     }
+    setLoading(false);
   }
   return <main className="access-page" id="contenido-principal">
     <div className="container">
@@ -37,7 +43,7 @@ export default function LoginPage() {
         </section>
         <section className="access-card" aria-labelledby="login-title">
           {user ? <>
-            <p className="hero__eyebrow">Cuenta de administrador</p>
+            <p className="hero__eyebrow">Cuenta de {user.role.toLowerCase()}</p>
             <h2 id="login-title">Hola, {user.name}</h2>
             <p>Tu sesión está lista. ¿Dónde quieres continuar?</p>
             <a className="btn btn--primary" href={`${sitePath('admin')}#resumen`}>Ir al panel de administración</a>
@@ -57,14 +63,15 @@ export default function LoginPage() {
                 <button className="password-toggle" type="button" aria-pressed={showPassword} onClick={() => setShowPassword(!showPassword)}>{showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}</button>
               </div>
               {error && <p className="form-status--error" role="alert">{error}</p>}
-              <button className="btn btn--primary" type="submit">Ingresar</button>
+              <button className="btn btn--primary" type="submit" disabled={loading}>{loading ? 'Ingresando…' : 'Ingresar'}</button>
             </form>
             <details className="demo-credentials">
               <summary>Accesos de demostración</summary>
               <p>Administrador: brun.rivera@duocuc.cl o germ.pino@duocuc.cl</p>
-              <p>Usuario: cliente@sanmarcos.cl</p>
+              <p>Recepcionista: recepcion@sanmarcos.cl</p>
+              <p>Dueño de mascota: cliente@sanmarcos.cl</p>
               <p>Contraseña: <code>{DEMO_PASSWORD}</code></p>
-              <p>Los datos y la sesión se guardan en este navegador.</p>
+              <p>El backend valida la contraseña y entrega un token JWT.</p>
             </details>
           </>}
         </section>

@@ -28,7 +28,8 @@ function Header() {
 
         <nav className="main-nav" id="mainNav" aria-label="Navegación principal">
           <ul className="main-nav__list">
-            {user?.role === 'Administrador' && <li><a href={`${sitePath('admin')}#resumen`}>Panel admin</a></li>}
+            {/* El enlace al panel solo aparece para Administrador y Recepcionista. */}
+            {(user?.role === 'Administrador' || user?.role === 'Recepcionista') && <li><a href={`${sitePath('admin')}#resumen`}>Panel admin</a></li>}
             <li>{user ? <button type="button" onClick={signOut}>Cerrar sesión</button> : <a href={sitePath('login')}>Iniciar sesión</a>}</li>
             <li>
               <a href={`${sitePath()}#inicio`}>Inicio</a>

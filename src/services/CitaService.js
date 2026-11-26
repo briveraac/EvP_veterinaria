@@ -1,37 +1,28 @@
-import axios from 'axios';
+import api, { errorMessage } from './api.js';
 
-// Dirección del backend. Se puede cambiar con la variable VITE_API_URL en un archivo .env.
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
-const BASE_URL = API_URL + '/api/citas';
-
+// Llamadas a la API REST de citas: /api/v1/citas
+// El token se agrega solo (ver el interceptor en api.js).
 class CitaService {
   getAll() {
-    return axios.get(BASE_URL);
+    return api.get('/citas');
   }
 
   getById(id) {
-    return axios.get(`${BASE_URL}/${id}`);
+    return api.get(`/citas/${id}`);
   }
 
   create(cita) {
-    return axios.post(BASE_URL, cita);
+    return api.post('/citas', cita);
   }
 
   update(id, cita) {
-    return axios.put(`${BASE_URL}/${id}`, cita);
+    return api.put(`/citas/${id}`, cita);
   }
 
   delete(id) {
-    return axios.delete(`${BASE_URL}/${id}`);
+    return api.delete(`/citas/${id}`);
   }
 }
 
-// Devuelve el mensaje que envía el backend o uno general si no hay conexión.
-export function errorMessage(error) {
-  if (error.response && error.response.data && error.response.data.mensaje) {
-    return error.response.data.mensaje;
-  }
-  return 'No se pudo conectar con el servidor. Revisa que el backend esté encendido.';
-}
-
+export { errorMessage };
 export default new CitaService();

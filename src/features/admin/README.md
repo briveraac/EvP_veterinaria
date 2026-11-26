@@ -1,30 +1,32 @@
 # Panel de administración
 
-Entrar por `/login` con un administrador y abrir `/admin`.
+Entrar por `/login` con un Administrador o Recepcionista y abrir `/admin`.
 
 ## Archivos
 
-- `AdminPage.jsx`: las cuatro vistas y las operaciones de usuarios y citas.
+- `AdminPage.jsx`: las cuatro vistas y las operaciones de usuarios y citas (todo contra el backend).
 - `AdminEditor.jsx`: formulario para crear o editar.
 - `AdminEntry.jsx`: revisa la sesión y el rol antes de mostrar el panel.
-- `adminData.js`: datos de ejemplo, lectura del almacenamiento y descarga CSV.
-- `adminUsers.js`: usuarios iniciales.
+- `adminData.js`: listas de roles, servicios y estados, fechas y descarga CSV.
 - `AdminIcon.jsx`: iconos que se muestran en los botones.
 - `admin.css`: estilos del panel.
 
 ## Funciones
 
 - Resumen: cifras generales y citas del día.
-- Usuarios: crear, editar, activar, desactivar, cambiar roles, buscar y filtrar.
-- Citas: crear, editar, reagendar, confirmar y filtrar por fecha o estado.
+- Usuarios (solo Administrador): crear, editar, activar, desactivar, cambiar roles, buscar y filtrar.
+- Citas: crear, editar, reagendar, confirmar y filtrar por fecha o estado. Eliminar solo el Administrador.
 - Reportes: consultar un período y descargarlo en CSV.
 
-El panel evita correos repetidos y citas no canceladas del mismo veterinario en la misma fecha y hora. También exige conservar al menos un administrador activo.
+## Llamadas al backend
 
-## Datos de ejemplo
+| Acción | Petición |
+| --- | --- |
+| Abrir el panel | `GET /api/v1/citas` y, si es admin, `GET /api/v1/usuarios` |
+| Crear / editar cita | `POST /api/v1/citas` / `PUT /api/v1/citas/{id}` |
+| Confirmar cita | `PUT /api/v1/citas/{id}` con estado Confirmada |
+| Eliminar cita | `DELETE /api/v1/citas/{id}` |
+| Crear / editar usuario | `POST /api/v1/usuarios` / `PUT /api/v1/usuarios/{id}` |
+| Activar / desactivar | `PUT /api/v1/usuarios/{id}` |
 
-Las cuentas activas usan la contraseña `SanMarcos2026!`. Los correos iniciales están en el README principal.
-
-Los cambios se guardan en este navegador con la clave `san-marcos-admin-demo-v2`. Los datos guardados tienen prioridad sobre `adminUsers.js`. Para volver a los datos iniciales, eliminar solamente esa clave en el almacenamiento local del navegador y recargar. También se reinician las citas de ejemplo.
-
-No hay servidor ni envío de invitaciones. Para usar datos reales hace falta conectar el proyecto a un backend que revise las credenciales y los permisos.
+Si el backend responde con error, el mensaje (`{ "mensaje": "..." }`) se muestra en el formulario o en el aviso.

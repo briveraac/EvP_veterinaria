@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import AdminEditor from './AdminEditor';
 import AdminIcon from './AdminIcon';
-import { downloadReport, localDate, readData, ROLES, SERVICES, STATUSES, STORAGE_KEY } from './adminData';
+import { downloadReport, localDate, ROLES, SERVICES, STATUSES } from './adminData';
 import './admin.css';
 import { sitePath } from '../../utils/paths.js';
 import { signOut } from '../auth/session';
 import CitaService, { errorMessage } from '../../services/CitaService';
+import UsuarioService from '../../services/UsuarioService';
 const navigation = [{
   id: 'resumen',
   label: 'Resumen'
@@ -43,14 +44,19 @@ function statusClass(status) {
   }
   return 'gray';
 }
-function currentView() {
+// Vistas del panel que puede ver cada rol: la recepcionista no ve "Usuarios".
+function allowedViews(isAdmin) {
+  return navigation.filter(item => isAdmin || item.id !== 'usuarios');
+}
+// Devuelve la vista del #hash si el usuario tiene acceso a ella.
+function currentView(items) {
   const hash = window.location.hash.slice(1);
-  for (const item of navigation) {
+  for (const item of items) {
     if (item.id === hash) {
       return hash;
     }
   }
-  return 'usuarios';
+  return 'resumen';
 }
 function Badge({
   children
@@ -65,27 +71,32 @@ function Empty({
     <p>{text}</p>
   </div>;
 }
-export default function AdminPage() {
-  const [view, setView] = useState(currentView);
-  // Los usuarios siguen en el navegador. Las citas llegan desde el backend.
-  const [data, setData] = useState(() => ({ ...readData(), appointments: [] }));
+export default function AdminPage({ user }) {
+  // Permisos según el rol:
+  // - Administrador: todo (usuarios, citas, eliminar, reportes).
+  // - Recepcionista: resumen, citas y reportes. No ve usuarios ni puede eliminar citas.
+  const isAdmin = user.role === 'Administrador';
+  const items = allowedViews(isAdmin);
+  const [view, setView] = useState(() => currentView(items));
+  // Usuarios y citas llegan desde el backend.
+  const [data, setData] = useState({ users: [], appointments: [] });
   const [apiError, setApiError] = useState('');
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState('Todos');
   const [menuOpen, setMenuOpen] = useState(false);
   const [editor, setEditor] = useState(null);
   const [notice, setNotice] = useState('');
-  const [storageError, setStorageError] = useState(false);
   const [reportStart, setReportStart] = useState(() => `${localDate().slice(0, 7)}-01`);
   const [reportEnd, setReportEnd] = useState(localDate);
   const [agendaDate, setAgendaDate] = useState('');
   const today = localDate();
   useEffect(() => {
+    const views = allowedViews(isAdmin);
     const handleHash = () => {
-      if (!navigation.some(item => item.id === window.location.hash.slice(1))) {
+      if (!views.some(item => item.id === window.location.hash.slice(1))) {
         return;
       }
-      setView(currentView());
+      setView(currentView(views));
       setSearch('');
       setFilter('Todos');
       setMenuOpen(false);
@@ -97,12 +108,15 @@ export default function AdminPage() {
       window.removeEventListener('hashchange', handleHash);
       document.title = title;
     };
-  }, []);
+  }, [isAdmin]);
 
-  // GET /api/citas: pedimos las citas al backend al abrir el panel.
+  // GET /api/v1/citas (y /api/v1/usuarios si es admin) al abrir el panel.
   useEffect(() => {
     loadAppointments();
-  }, []);
+    if (isAdmin) {
+      loadUsers();
+    }
+  }, [isAdmin]);
   useEffect(() => {
     if (!notice) {
       return;
@@ -124,16 +138,12 @@ export default function AdminPage() {
     return () => window.removeEventListener('keydown', handleEscape);
   }, [menuOpen]);
 
-  // Guardamos tanto en el navegador como en el estado de React.
-  function persist(next, message) {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-      setStorageError(false);
-    } catch {
-      setStorageError(true);
-    }
-    setData(next);
-    setNotice(message);
+  function loadUsers() {
+    UsuarioService.getAll().then(response => {
+      setData(current => ({ ...current, users: response.data }));
+    }).catch(error => {
+      setApiError(errorMessage(error));
+    });
   }
   function loadAppointments() {
     CitaService.getAll().then(response => {
@@ -164,56 +174,32 @@ export default function AdminPage() {
     if (editor.type === 'appointment') {
       return saveAppointment(item);
     }
-    if (editor.type === 'user') {
-      let otherAdmin = false;
-      for (const user of data.users) {
-        if (user.id === item.id) {
-          continue;
-        }
-        if (user.email.toLowerCase() === item.email.toLowerCase()) {
-          return 'Ya existe un usuario con ese correo electrónico.';
-        }
-        if (user.active && user.role === 'Administrador') {
-          otherAdmin = true;
-        }
-      }
-      if (!otherAdmin && (!item.active || item.role !== 'Administrador')) {
-        return 'Debe quedar al menos un administrador activo en el sistema.';
-      }
-      const users = [...data.users];
-      const index = users.findIndex(user => user.id === item.id);
-      if (index === -1) {
-        users.push(item);
-      } else {
-        users[index] = item;
-      }
-      persist({
-        ...data,
-        users
-      }, 'Cambios guardados correctamente.');
-    }
-    setEditor(null);
+    return saveUser(item);
   }
-  function toggleUser(user) {
-    const activeAdmins = data.users.filter(item => item.active && item.role === 'Administrador');
-    if (user.active && user.role === 'Administrador' && activeAdmins.length === 1) {
-      setNotice('Debe quedar al menos un administrador activo.');
-      return;
+
+  // POST /api/v1/usuarios si es nuevo, PUT si ya existía.
+  // El backend revisa correos repetidos y que quede al menos un administrador.
+  function saveUser(item) {
+    let request;
+    if (editor.item) {
+      request = UsuarioService.update(item.id, item);
+    } else {
+      request = UsuarioService.create(item);
     }
-    const users = [...data.users];
-    const index = users.findIndex(item => item.id === user.id);
-    users[index] = {
-      ...user,
-      active: !user.active
-    };
-    let message = 'Usuario activado.';
-    if (user.active) {
-      message = 'Usuario desactivado.';
-    }
-    persist({
-      ...data,
-      users
-    }, message);
+    return request.then(() => {
+      loadUsers();
+      setNotice('Cambios guardados correctamente.');
+      setEditor(null);
+      return '';
+    }).catch(error => errorMessage(error));
+  }
+  function toggleUser(item) {
+    UsuarioService.update(item.id, { ...item, active: !item.active }).then(() => {
+      loadUsers();
+      setNotice(item.active ? 'Usuario desactivado.' : 'Usuario activado.');
+    }).catch(error => {
+      setNotice(errorMessage(error));
+    });
   }
   function confirmAppointment(appointment) {
     CitaService.update(appointment.id, { ...appointment, status: 'Confirmada' }).then(() => {
@@ -224,7 +210,7 @@ export default function AdminPage() {
     });
   }
 
-  // DELETE /api/citas/{id}
+  // DELETE /api/v1/citas/{id} (solo Administrador)
   function deleteAppointment(appointment) {
     if (!window.confirm(`¿Eliminar la cita de ${appointment.pet}?`)) {
       return;
@@ -295,9 +281,13 @@ export default function AdminPage() {
   }, {
     label: 'Por confirmar',
     value: pending.length
-  }, {
+  }, isAdmin ? {
     label: 'Usuarios activos',
     value: activeUsers
+  } : {
+    // La recepcionista no ve usuarios, así que mostramos otro dato.
+    label: 'Citas registradas',
+    value: appointments.length
   }, {
     label: 'Atenciones de hoy',
     value: todayAppointments.filter(item => item.status === 'Completada').length
@@ -350,9 +340,10 @@ export default function AdminPage() {
               <button className="admin-icon-button" onClick={() => openAppointmentEditor(item)} aria-label={`Editar cita de ${item.pet}`} title="Editar o reagendar">
                 <AdminIcon name="edit" size={18} />
               </button>
-              <button className="admin-icon-button" onClick={() => deleteAppointment(item)} aria-label={`Eliminar cita de ${item.pet}`} title="Eliminar cita">
+              {/* Solo el administrador ve el botón de eliminar (el backend también lo exige). */}
+              {isAdmin && <button className="admin-icon-button" onClick={() => deleteAppointment(item)} aria-label={`Eliminar cita de ${item.pet}`} title="Eliminar cita">
                 <AdminIcon name="trash" size={18} />
-              </button>
+              </button>}
             </div>
           </td>
         </tr>)}</tbody>
@@ -364,6 +355,7 @@ export default function AdminPage() {
     <header className="admin-header">
       <a className="admin-brand" href={sitePath('admin')}>Veterinaria San Marcos</a>
       <div className="admin-header-actions">
+        <span className="admin-cell-subtitle">{user.name} · {user.role}</span>
         <a href={sitePath()}>Volver al sitio</a>
         <button className="admin-small-button" onClick={signOut}>Cerrar sesión</button>
         <button className="admin-icon-button admin-menu-button" aria-label="Abrir navegación" aria-expanded={menuOpen} aria-controls="admin-navigation" onClick={() => setMenuOpen(!menuOpen)}>
@@ -372,7 +364,7 @@ export default function AdminPage() {
       </div>
     </header>
     <nav id="admin-navigation" className={`admin-navigation ${menuOpen ? 'is-open' : ''}`} aria-label="Administración">
-        {navigation.map(item => <a key={item.id} href={`#${item.id}`} className={`admin-nav-item ${view === item.id ? 'is-active' : ''}`} aria-current={view === item.id ? 'page' : undefined}>{item.label}</a>)}
+        {items.map(item => <a key={item.id} href={`#${item.id}`} className={`admin-nav-item ${view === item.id ? 'is-active' : ''}`} aria-current={view === item.id ? 'page' : undefined}>{item.label}</a>)}
       </nav>
     <div className="admin-workspace">
       <main id="admin-content" className="admin-main" tabIndex={-1}>
@@ -383,9 +375,8 @@ export default function AdminPage() {
           </div>
           {view !== 'reportes' && <button className="admin-button" onClick={openNewEditor}>{view === 'usuarios' ? 'Nuevo usuario' : 'Nueva cita'}</button>}
         </div>
-        <p className="admin-demo-note">Las citas se guardan en el backend. Los usuarios se guardan en este navegador.</p>
+        <p className="admin-demo-note">Las citas y los usuarios se guardan en el backend. Tu rol: {user.role}.</p>
         {apiError && <p className="admin-error" role="alert">{apiError}</p>}
-        {storageError && <p className="admin-error" role="alert">El navegador no permite guardar los datos. Los cambios estarán disponibles solo durante esta sesión.</p>}
         {view === 'resumen' && <>
           <div className="admin-stats">{stats.map(stat => <article className="admin-stat" key={stat.label}>
               <span>{stat.label}</span>
